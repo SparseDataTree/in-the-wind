@@ -1,28 +1,32 @@
 # in-the-wind
 
 ## Purpose
-Proof of concept for securing internal data; maybe financial or medical records.
+Zero trust method for securing persisted data.
 
 ## Overview
-All the ideas are simple; but put together appear to provide some interesting, and potentially useful security functionality. 
+We present a method to secure persisted data such that:
+1. No single entity has access to secured data (data privacy).
+1. No single entity can block or filter access to secured data (data tyranny).
+1. Trust can be dynamically granted or revoked.
 
-At the root of the security mechanism, this approach uses a one-time-pad.  Of course, this has the benefit of being unbreakable.  It has the downside that the key is as big as the message.
+At the root of the security mechanism, this approach uses a one-time-pad to produce encoding factors.
 
-In this method, there is no notion of key and cipher; the encoding factors are commutative and are functionaly interchangable.
+There is no notion of key and cipher; the encoding factors are commutative and are functionally interchangeable.
 
-Since this solution is aimed at securing internal data, one probably expects that all of the factors are kept apart in such a way that it is unlikely that all the factors could be stolen.  
+This solution provides a zero trust approach to securing internal data; each encoding factor is owned by a different entity.  
 
-Of course, additional layers of security could be added.
+## Usage
+In this POC, a text message is "unwound" into several (at least two) encoding factors.  To retrieve the message, all the encoding factors are combined.  Without all the factors, the message cannot be retrieved.  The factors themselves are commutative.  There is no notion of distinct keys and ciphers.
+### Example
+Say that a hospital wants to secure patient's medical records, in a way that puts zero trust in any one particular data-storage provider.  It works with a data-storage broker who arranges for multiple data-storage providers to each store a single encoding factor.  
 
-## Step One
-First part is a proof of concept.  
+One pattern that would protect data privacy and against data tyranny (assuming no collusion between data-providing entities) would entail the creation of two parallel sets of two encoding factors, each managed by a separate data provider, call them Aa, Bb, Cc, Dd.
+Aa and Bb each own encoding factors that are sufficient to retrieve the data.  Cc and Dd each own independent encoding factors that can also be combined to retrieve the data.
+Thus, none of the data-providers has access to the data; and none of the data-providers can hold the data for ransom.
 
-In this POC, a text message is "unwound" into several (at least two) text factors.  To retrieve the message, all the factors are combined.  Without all the factors, the message cannot be retrieved.  The factors themselves are commutative.  There is no notion of distinct keys and ciphers.
+Furthermore, if one of the data-providers was found to be untrustworthy, its encoding factor could be invalidated; and a new entity Ee could be brought into the process.
 
-There are several issues in the POC to call out, that would need to be addressed before applying this code to production.
-1. The POC has only implemented support for text messages and text factors.  Surely other data types will be of interest.
-1. The POC leverages default Java randomization; which is not true randomness expected for one-time-pads, and may not be sufficiently strong for some applications
-1. The POC has not addressed issues of serialization and speed.
+
 
 ### Functionality
 The Winder interface exposes two methods: one of which creates factors from a message; and the other which combines factors - to retrieve the original method.
@@ -34,17 +38,13 @@ However, these two methods can be leveraged in multiple ways to achieve some int
 1. If needed, existing factors can be reduced.  As in the example above, we can also go from having three factors to having two.
 1. If needed, we can have parallel sets of factors, each of which can restore the message.
 
-
-
 ### Getting started
 1. Perhaps the best way to get started is to use a debugger and step through some of the unit tests.
 
 ## Potential next steps
-1. "True" randomization
+1. "True" randomization - The POC leverages default Java randomization; which is not true randomness expected for one-time-pads, and may not be sufficiently strong for some applications
 1. Expanded support for more data types.
 1. **Serialization support** (configurable) - there would need to be careful thought on how to separate the factors in such a way that a security breach is unlikely to compromize all of them.
-1. More tests
-1. Development of a suite of microservices.
 
 
 
