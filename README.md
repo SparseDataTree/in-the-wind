@@ -21,10 +21,13 @@ In this POC, a text message is "unwound" into several (at least two) encoding fa
 Say that a hospital wants to secure patient's medical records, in a way that puts zero trust in any one particular data-storage provider.  It works with a data-storage broker who arranges for multiple data-storage providers to each store a single encoding factor.  
 
 One pattern that would protect data privacy and against data tyranny (assuming no collusion between data-providing entities) would entail the creation of two parallel sets of two encoding factors, each managed by a separate data provider, call them Aa, Bb, Cc, Dd.
-Aa and Bb each own encoding factors that are sufficient to retrieve the data.  Cc and Dd each own independent encoding factors that can also be combined to retrieve the data.
+Aa and Bb each own encoding factors that provide a sufficient basis to retrieve the data.  Cc and Dd each own independent encoding factors that together form a basis to retrieve the data.
 Thus, none of the data-providers has access to the data; and none of the data-providers can hold the data for ransom.
 
 Furthermore, if one of the data-providers was found to be untrustworthy, its encoding factor could be invalidated; and a new entity Ee could be brought into the process.
+
+![](images/inthewind.png)
+
 
 
 
@@ -44,7 +47,7 @@ However, these two methods can be leveraged in multiple ways to achieve some int
 ## Potential next steps
 1. "True" randomization - The POC leverages default Java randomization; which is not true randomness expected for one-time-pads, and may not be sufficiently strong for some applications
 1. Expanded support for more data types.
-1. **Serialization support** (configurable) - there would need to be careful thought on how to separate the factors in such a way that a security breach is unlikely to compromize all of them.
+1. Consider that the "Winder" functionality should belong to the owner of the data; so that no "Winder" service itself becomes a data tyrant.
 
 
 
