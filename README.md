@@ -8,7 +8,7 @@ We present a method to secure data such that:
 1. No single entity can block or filter access to secured data (data tyranny).
 1. Trust can be dynamically granted or revoked.
 
-At the root of the security mechanism, an algorithm produces interchangeable (distributed) encoding factors, each owned by a different entity.  (In this POC, we use a pseudo-one-time-pad to generate interchangeable entities.)
+At the root of the security mechanism, an algorithm produces interchangeable, distributed encoding factors, each owned by a different entity.  (In this POC, we use a pseudo-one-time-pad to generate interchangeable entities.)
 ## Usage
 In this POC, a text message is "unwound" into several (at least two) encoding factors.  To retrieve the message, all the encoding factors are "wound" (combined).  Without all the factors, the message cannot be retrieved. 
 ### Example
