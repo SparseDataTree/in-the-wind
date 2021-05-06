@@ -1,30 +1,24 @@
 # in-the-wind
 
 ## Purpose
-Zero trust method for securing persisted data.
-
+Securing Data With Zero Trust
 ## Overview
-We present a method to secure persisted data such that:
+We present a method to secure data such that:
 1. No single entity has access to secured data (data privacy).
 1. No single entity can block or filter access to secured data (data tyranny).
 1. Trust can be dynamically granted or revoked.
 
-At the root of the security mechanism, this approach uses a one-time-pad to produce encoding factors.
-
-There is no notion of key and cipher; the encoding factors are commutative and are functionally interchangeable.
-
-This solution provides a zero trust approach to securing internal data; each encoding factor is owned by a different entity.  
-
+At the root of the security mechanism, an algorithm produces interchangeable (distributed) encoding factors, each owned by a different entity.  (In this POC, we use a pseudo-one-time-pad to generate interchangeable entities.)
 ## Usage
-In this POC, a text message is "unwound" into several (at least two) encoding factors.  To retrieve the message, all the encoding factors are combined.  Without all the factors, the message cannot be retrieved.  The factors themselves are commutative.  There is no notion of distinct keys and ciphers.
+In this POC, a text message is "unwound" into several (at least two) encoding factors.  To retrieve the message, all the encoding factors are "wound" (combined).  Without all the factors, the message cannot be retrieved. 
 ### Example
 Say that a hospital wants to secure patient's medical records, in a way that puts zero trust in any one particular data-storage provider.  It works with a data-storage broker who arranges for multiple data-storage providers to each store a single encoding factor.  
 
-One pattern that would protect data privacy and against data tyranny (assuming no collusion between data-providing entities) would entail the creation of two parallel sets of two encoding factors, each managed by a separate data provider, call them Aa, Bb, Cc, Dd.
-Aa and Bb each own encoding factors that provide a sufficient basis to retrieve the data.  Cc and Dd each own independent encoding factors that together form a basis to retrieve the data.
+One pattern that would protect data privacy and against data tyranny (assuming no collusion between data-providing entities) would entail the creation of two parallel sets of two encoding factors, each managed by a separate data provider, call them **Aa**, **Bb**, **Cc**, **Dd**.
+**Aa** and **Bb** each own encoding factors that provide a sufficient basis to retrieve the data.  **Cc** and **Dd** each own independent encoding factors that together form a basis to retrieve the data.
 Thus, none of the data-providers has access to the data; and none of the data-providers can hold the data for ransom.
 
-Furthermore, if one of the data-providers was found to be untrustworthy, its encoding factor could be invalidated; and a new entity Ee could be brought into the process.
+Furthermore, if one of the data-providers was found to be untrustworthy, its encoding factor could be invalidated; and a new entity **Ee** could be brought into the process.
 
 ![](images/inthewind.png)
 
@@ -49,6 +43,8 @@ However, these two methods can be leveraged in multiple ways to achieve some int
 1. Expanded support for more data types.
 1. Consider that the "Winder" functionality should belong to the owner of the data; so that no "Winder" service itself becomes a data tyrant.
 
-
-
+## Literature
+Shamir, Adi. *How to Share a Secret*, 
+Massachusetts Institute of Technology
+Communications November 1979 of Volume 22 the ACM Number 11 pp. 612-613
 
