@@ -2,6 +2,8 @@
 
 ## Purpose
 Securing Data With Zero Trust
+
+We leverage an established concept - secret sharing - to show, in principle, the feasibility of offering secret sharing as a service. 
 ## Overview
 We present a method to secure data such that:
 1. No single entity has access to secured data (data privacy).
