@@ -3,12 +3,33 @@
 ## Purpose
 Securing Data With Zero Trust
 
-We leverage an established concept - secret sharing - to show, in principle, the feasibility of offering secret sharing as a service. 
+Concerns around data security start with the question of authority; does a person or entity have authority to access data?  
+And so, the password was invented, along with cipher keys and tokens.
+
+But no matter how good our passwords and encryption may be, they are no more trustworthy than the person(s) owning them.  
+We have what might be called a **single-point of security failure**.
+
+If we have data that we do not want exposed to such risk; perhaps customer data, or trade secrets, what can be done?
+This is not a new question.  One answer is to create shared authorization (see literature reference), in which no single person
+has authority to access the super-secret data.  
+
+At it's simplest, we might imagine that two passwords, owned by different people, are required
+to access our super-sensitive data.  With our two passwords, we've solved the *single-point of security failure* problem.  Things look good for a moment or so
+until we ask... what if something happens to one of the people?  Do we lose access to our data?
+
+Considering this scenario, we find that there are two additional problems (besides single-point of security failure) that we need to solve.
+1. First, we need to solve what we might call a **single-point of access failure** problem.  That is, we can not have a single person or entity with the 
+potential to deny us access to our data.
+1. Second, we need to account for the fact that roles change.  People leave positions.  Authority for specific individuals 
+may need to be reassigned, perhaps without their cooperation.
+   
+
+We leverage **secret sharing**  to show, in a proof of concept, the feasibility of offering secret sharing as a service. 
 ## Overview
 We present a method to secure data such that:
-1. No single entity has access to secured data (data privacy).
-1. No single entity can block or filter access to secured data (data tyranny).
-1. Trust can be dynamically granted or revoked.
+1. No single entity has access to secured data (single-point of security failure).
+1. No single entity can block or filter access to secured data (single-point of access failure).
+1. Trust can be dynamically granted or revoked (authority reassignment).
 
 At the root of the security mechanism, an algorithm produces interchangeable, distributed encoding factors, each owned by a different entity.  (In this POC, we use a pseudo-one-time-pad to generate interchangeable entities.)
 ## Usage
@@ -46,7 +67,12 @@ However, these two methods can be leveraged in multiple ways to achieve some int
 1. Consider that the "Winder" functionality should belong to the owner of the data; so that no "Winder" service itself becomes a data tyrant.
 
 ## Literature
-Shamir, Adi. *How to Share a Secret*, 
+* Shamir, Adi. *How to Share a Secret*, 
 Massachusetts Institute of Technology
 Communications November 1979 of Volume 22 the ACM Number 11 pp. 612-613
+  
+* *Random number generation*,  Wikipedia, https://en.wikipedia.org/wiki/Random_number_generation
+
+
+
 
